@@ -29,6 +29,9 @@ el 0 y el 100*/
 
 
 console.log("Nuestro array finalmente seria el siguiente = "  + arrayf)
+}
+
+function sumarray(){
 let sum = 0
 for (e=0; e<arrayf.length;e++){
     sum = sum + arrayf[e]
