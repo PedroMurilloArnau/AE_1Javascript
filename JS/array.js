@@ -1,6 +1,11 @@
+var e
+var arrayf = [e]
+/*Declaro las variables de ambito global para que abarque todas
+las funciones.*/
 function recorarray(){
-let i
-let array1 = [i]
+var i
+var array1 = [i]
+//Estas serian variables locales de ésta funcion.
 for (i=0; i<10;i++){
 array1[i]=Math.round((Math.random() * 200))
 /*De la siguiente manera utilizamos Math.random()*200 para
@@ -20,8 +25,7 @@ for(i=0; i<array1.length;i++){
 /*mediante el metodo "delete" eliminamos las casillas con
 numeros comprendidos entre el 0 y el 100 */
 
-let e
-let arrayf = [e]
+
 arrayf = array1.filter(Number)
 /*Mediante el método filter podremos filtrar las casillas
 que poseen un número por tanto que esten comprendidas entre
@@ -32,10 +36,11 @@ console.log("Nuestro array finalmente seria el siguiente = "  + arrayf)
 }
 
 function sumarray(){
-let sum = 0
+
+var sum = 0
 for (e=0; e<arrayf.length;e++){
     sum = sum + arrayf[e]
 }
-let media=(sum/arrayf.length)
+var media=(sum/arrayf.length)
 console.log('La media sera de : ' + media)
 }
