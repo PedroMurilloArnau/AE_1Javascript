@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Actividad 1</title>
+  </head>
+  <script type="text/javascript">
+    //Empezamos declarando un array vacío que llenaremos con 10 númeos aleatorios
+    let array = [];
+    let numero; //declaro la variable que utilizaré para "validar" el número
+
+    //Añadimos 10 números aleatorios entre 0 y 100
+    for (let i = 0; array.length <= 9; i++) {
+      numero = Math.round(Math.random() * 200); //redondeo el número para evitar decimales
+      if (numero < 0 || numero > 100) {
+        continue;
+      } else {
+        array.push(numero);
+      }
+    } //fin del for
+
+    /*********************
+     ********MEDIA********
+     *********************/
+    function media(parametro) {
+      var acumulador = 0;
+      var media = 0;
+      for (var i = 0; i < array.length; i++) {
+        acumulador = acumulador + array[i];
+      }
+      media = acumulador / array.length;
+      return media;
+    }
+
+    /*********************
+     *******Ordenar*******
+     *********************/
+    /*
+    Otra forma más sencilla de ordenar el array, a través del método sort()
+    array.sort(function(a,b){
+        return a - b;
+    })
+    console.log(array);
+    */
+
+    function ordenarBurbuja() {
+      var aux;
+      for (var i = 0; i < array.length; i++) {
+        for (var j = 0; j < array.length - 1; j++) {
+          if (array[j] > array[j + 1]) {
+            aux = array[j];
+            array[j] = array[j + 1];
+            array[j + 1] = aux;
+          }
+        }
+      }
+      return array;
+    }
+
+    /*********************
+     ********MODA*********
+     *********************/
+
+    function calcularModa() {     
+ 
+      let numberCounters = {};
+      for (var i = 0; i < array2.length; i++) {
+        const element = array2[i];
+        numberCounters[element] = numberCounters[element]
+          ? numberCounters[element] + 1
+          : 1;
+      }
+
+      const [primerValor] = Object.entries(numberCounters).sort((a, b) => {
+        return b[1] - a[1]; // aquí sacas los valores
+      });
+
+      return primerValor;
+      //console.log(primerValor);
+    }
+
+    /*********************
+     *******MEDIANA*******
+     *********************/
+    function calcularMediana() {
+      var mediana;
+      var a;
+      var b;
+
+      if (array.length % 2 == 0) {
+        a = array[array.length / 2];
+        b = array[array.length / 2 - 1];
+        mediana = (a + b) / 2;
+        return mediana;
+      } else {
+        mediana = array[array.length % 2];
+        return mediana;
+      }
+    }
+
+    console.log("-------------------");
+    console.log("El array es: " + array);
+
+    console.log("-------------------");
+    console.log("La media es:" + media(array));
+
+    console.log("-------------------");
+    console.log("Array ordenado: " + ordenarBurbuja(array));
+
+    console.log("-------------------");
+    console.log("La mediana es: " + calcularMediana(array));
+
+    let array2 = [2, 2, 3, 3, 3, 5, 3, 3, 6, 9, 5, 5, 5, 5, 8, 8];
+    console.log("-------------------");
+    console.log("Vamos a ordenar array2: " + ordenarBurbuja(array2));
+    let resultado = calcularModa(array2);
+    console.log(`La moda es: ${resultado[0]} se repite ${resultado[1]} veces`);
+  </script>
+  <body></body>
+</html>
