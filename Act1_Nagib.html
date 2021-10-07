@@ -8,29 +8,29 @@
   </head>
   <script type="text/javascript">
     //Empezamos declarando un array vacío que llenaremos con 10 númeos aleatorios
-    let array = [];
+    let miArray = [];
     let numero; //declaro la variable que utilizaré para "validar" el número
 
-    //Añadimos 10 números aleatorios entre 0 y 100
-    for (let i = 0; array.length <= 9; i++) {
+    //Añadimos 10 números aleatorios entre 0 y 200
+    for (let i = 0; miArray.length <= 9; i++) {//Para que el array meta 10 valores saltandose los valores no admitidos declaramos que la longitud del array tiene que ser <=9
       numero = Math.round(Math.random() * 200); //redondeo el número para evitar decimales
       if (numero < 0 || numero > 100) {
         continue;
       } else {
-        array.push(numero);
+        miArray.push(numero);
       }
     } //fin del for
 
     /*********************
      ********MEDIA********
      *********************/
-    function media(parametro) {
+    function media(unArray) {//La funcion media reibe por parámetro un Array
       var acumulador = 0;
       var media = 0;
-      for (var i = 0; i < array.length; i++) {
-        acumulador = acumulador + array[i];
+      for (var i = 0; i < unArray.length; i++) {
+        acumulador = acumulador + unArray[i];
       }
-      media = acumulador / array.length;
+      media = acumulador / unArray.length;
       return media;
     }
 
@@ -45,18 +45,18 @@
     console.log(array);
     */
 
-    function ordenarBurbuja() {
+    function ordenarBurbuja(unArray) {// la función ordenarBurbuja recibe por parametro un array el cual ordena
       var aux;
-      for (var i = 0; i < array.length; i++) {
-        for (var j = 0; j < array.length - 1; j++) {
-          if (array[j] > array[j + 1]) {
-            aux = array[j];
-            array[j] = array[j + 1];
-            array[j + 1] = aux;
+      for (var i = 0; i < unArray.length; i++) {
+        for (var j = 0; j < unArray.length - 1; j++) {
+          if (unArray[j] > unArray[j + 1]) {
+            aux = unArray[j];
+            unArray[j] = unArray[j + 1];
+            unArray[j + 1] = aux;
           }
         }
       }
-      return array;
+      return unArray;
     }
 
     /*********************
@@ -65,58 +65,57 @@
 
     function calcularModa() {     
  
-      let numberCounters = {};
+      let numberCounters = {};//Creo un Array asosiativo vacio, en el que ir introduciendo los datos por pares de Clave:Valor
       for (var i = 0; i < array2.length; i++) {
         const element = array2[i];
-        numberCounters[element] = numberCounters[element]
-          ? numberCounters[element] + 1
-          : 1;
+        numberCounters[element] = numberCounters[element]? numberCounters[element] + 1 : 1;
       }
 
-      const [primerValor] = Object.entries(numberCounters).sort((a, b) => {
+      const [primerValor] = Object.entries(numberCounters).sort((a, b) => {//Le paso mi Array numberCounters al método Object.entries
         return b[1] - a[1]; // aquí sacas los valores
+        
       });
 
-      return primerValor;
-      //console.log(primerValor);
+      return primerValor;      
     }
 
     /*********************
      *******MEDIANA*******
      *********************/
-    function calcularMediana() {
+    function calcularMediana(unArray) {
       var mediana;
       var a;
       var b;
 
-      if (array.length % 2 == 0) {
-        a = array[array.length / 2];
-        b = array[array.length / 2 - 1];
+      if (unArray.length % 2 == 0) {
+        a = unArray[unArray.length / 2];
+        b = unArray[unArray.length / 2 - 1];
         mediana = (a + b) / 2;
         return mediana;
       } else {
-        mediana = array[array.length % 2];
+        mediana = unArray[unArray.length % 2];
         return mediana;
       }
     }
 
     console.log("-------------------");
-    console.log("El array es: " + array);
+    console.log("El array es: " + miArray);
 
     console.log("-------------------");
-    console.log("La media es:" + media(array));
+    console.log("La media es:" + media(miArray));
 
     console.log("-------------------");
-    console.log("Array ordenado: " + ordenarBurbuja(array));
+    console.log("Array ordenado: " + ordenarBurbuja(miArray));//Para calcular la mediana, primero se ordena el array
 
     console.log("-------------------");
-    console.log("La mediana es: " + calcularMediana(array));
+    console.log("La mediana es: " + calcularMediana(miArray));
 
-    let array2 = [2, 2, 3, 3, 3, 5, 3, 3, 6, 9, 5, 5, 5, 5, 8, 8];
+    let array2 = [2, 2, 3, 3, 3, 5, 3, 3, 6, 9, 5, 5, 5, 8, 8];
     console.log("-------------------");
-    console.log("Vamos a ordenar array2: " + ordenarBurbuja(array2));
-    let resultado = calcularModa(array2);
-    console.log(`La moda es: ${resultado[0]} se repite ${resultado[1]} veces`);
+    
+    let resultado = calcularModa(array2);    
+    console.log(`La moda es: ${resultado[0]} se repite ${resultado[1]} veces`);//expandiendo las variables obtenemos el resultado
+
   </script>
   <body></body>
 </html>
