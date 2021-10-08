@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!--meta charset="ISO-8859-1"-->
+<meta charset="UTF-8">
+<title>Media 10 números</title>
+</head>
+<body>
+<script type="text/javascript">
+
+// Arrays con valores dados
+let array1 = [7,2,0,100,45,16,77,57,16,10];
+let array2 = [10,9,11,9,10,-11,-9,10,-11, "a"];
+let array3 = ["a","b", 10, 15, 20, 0, 100, 101, 102, 103];
+let array4 = [];
+let array5 = [10,9,undefined,9,10,-11,-9,10,-11, "a"];
+let array6 = [3,4,15,15,47,47,47,64,64,64];
+let array7 = [64,4,47,15,47,15,47,3,64,64];
+let array8 = [undefined, undefined, undefined, undefined, undefined, undefined, undefined, 9, 10, 9];
+let array9 = [undefined, 15, "hola", 14, undefined, undefined, undefined, 9, 10, 9];
+let array10 = Array(10).fill(-1);
+
+
+let frecuencia = [];
+let moda = [];
+
+
+/***********************************/
+/**** Funciones auxiliares *********/
+/***********************************/
+
+function enRangoIncluido(num, min, max){
+    return ((num >= min) && (num <= max) && (typeof(num)==="number"));
+}
+
+function ordenarArrayMenorMay(arr){
+    for (let i = 0; i<(arr.length-1); i++) {
+        for (let j = 1; j<arr.length; j++){
+            if (arr[j-1]>arr[j]) {
+                let aux = arr[j];
+                arr[j] = arr[j-1];
+                arr[j-1] = aux;
+            }
+        }
+    }
+
+    return arr;
+}
+
+
+/***********************************/
+/**** Constantes *******************/
+/***********************************/
+
+const minValido = 0;
+const maxValido = 100;
+
+
+
+/********************/
+/****** MEDIA *******/
+/********************/
+
+// Cálculo
+function mediaArray(arr){
+
+    /* La función devuelve la media.
+    - En caso de un array sin valores válidos, devuelve NaN
+    - En caso de no pasar un array, devuelve "Error" 
+    
+
+    */
+
+    let acumulado = 0;
+    let contador = 0;
+    let media;
+
+    if (Array.isArray(arr)){
+        for (let i = 0; i<arr.length; i++) {
+            // Si el valor es válido, contarlo como tal y acumular su valor
+            if (enRangoIncluido(arr[i], minValido, maxValido)){
+                contador ++;
+                acumulado += arr[i];
+            } 
+        }
+
+        // Visualización
+        if (contador === 0) {
+            media = NaN;
+            console.log("Ningún valor del array es válido");
+        } else {
+            media = acumulado/contador;
+            console.log("La media de los valores válidos es " + media);
+        }
+        return media;
+
+    // Si no se pasa un array
+    } else {        
+        console.log("Error: se debe pasar un array con valores para calcular la media");
+        return "Error";
+    }
+}
+
+
+
+/********************/
+/****** MODA ********/
+/********************/
+
+
+// Cálculo
+
+function modaArray(arr){
+
+    // Comprobar si se pasa un array
+    if (Array.isArray(arr)){
+
+        // Array inicial de frecuencias
+        let frecArr = Array(10).fill(0);
+
+        // Array con las veces que se repite 
+        // ese número a partir de esa posicion
+        for (let i=0; i<(arr.length-1); i++){
+            // Si es valor válido, contarlo
+            if(enRangoIncluido(arr[i], minValido, maxValido)){
+                frecArr[i]++;
+            
+            for (let j=(i+1); j<arr.length; j++){
+                if (arr[i]===arr[j]){
+                    frecArr[i]++;
+                }
+            }
+        }
+        }
+
+        // Encontrar número de repeticiones más alto
+        // (veces que sale el/los valores más repetido(s))
+        // (aunque sea múltiple)
+        let mayor = 0;
+        for (let i=0; i<frecArr.length; i++){
+            if((frecArr[i]-mayor)>0){
+                mayor = frecArr[i];
+            }
+        }
+        
+        // Apuntar la posición de los mayores índices
+        let arrInd=[];
+        for (let i=0; i<frecArr.length; i++){
+            if ((frecArr[i]-mayor)===0){
+                arrInd.push(i);
+            }
+        }
+        
+        // Mostrar resultado
+        if (arrInd.length === 0){        
+            console.log("No se puede calcular la moda");
+            return -1;
+        } else if (arrInd.length === 1){
+            console.log("La moda corresponde al número " + arr[arrInd[0]] + " que aparece "+ mayor +" veces");
+            return arr[arrInd[0]];
+        } else if (arrInd.length > 1){
+            console.log("La moda corresponde a los números:");
+            for (let i=0; i<arrInd.length; i++){
+                console.log((arr[arrInd[i]]));
+            }
+            console.log( " que aparecen " + mayor + " veces cada uno.");
+        }
+    
+    // si no se pasa un array a la función
+    } else {
+        console.log("Error: se debe pasar un array con valores para calcular la moda");
+        return "Error";
+    }
+}
+
+
+/********************/
+/****** MEDIANA *****/
+/********************/
+
+
+// Cálculo
+
+function medianaArray(arr){
+    // Comprobar si se pasa un array
+    if (Array.isArray(arr)){
+        let validos = 0;
+        let arrValidos = [];
+
+        // Copiar a un array auxiliar omitiendo valores inválidos
+        for (let i = 0; i<arr.length; i++) {
+            if (enRangoIncluido(arr[i], minValido, maxValido)){
+                arrValidos[validos] = arr[i];
+                validos++;
+            }
+        }
+
+        // Ordenación del array
+        let arrayOrdenado = ordenarArrayMenorMay(arrValidos);
+        console.log(arrayOrdenado);
+
+        // Cálculo de la mediana
+        let mediana;
+        // Si es impar
+        if (arrayOrdenado.length === 0){
+            mediana = NaN;
+        } else if (arrayOrdenado.length%2 === 1){
+            mediana = arrayOrdenado[(arrayOrdenado.length-1)/2];
+        } else if (arrayOrdenado.length%2 === 0){
+            mediana = (arrayOrdenado[arrayOrdenado.length/2] + arrayOrdenado[arrayOrdenado.length/2-1]) / 2;
+        }
+
+
+        // Mostrar mediana
+        if (isNaN(mediana)) {    
+            console.log("No se puede calcular la mediana.");
+        } else {
+            console.log("La mediana es " + mediana);
+        }
+
+        return mediana;
+    } else {
+        console.log("Error: se debe pasar un array con valores para calcular la mediana");
+        return "Error";
+    }
+
+}
+
+
+mediaArray(array1);
+modaArray(array1);
+medianaArray(array1);
+
+mediaArray(array2);
+modaArray(array2);
+medianaArray(array2);
+
+mediaArray(array3);
+modaArray(array3);
+medianaArray(array3);
+
+mediaArray(array4);
+modaArray(array4);
+medianaArray(array4);
+
+mediaArray(array5);
+modaArray(array5);
+medianaArray(array5);
+
+mediaArray(array6);
+modaArray(array6);
+medianaArray(array6);
+
+mediaArray(array7);
+modaArray(array7);
+medianaArray(array7);
+
+mediaArray(array8);
+modaArray(array8);
+medianaArray(array8);
+
+mediaArray(array9);
+modaArray(array9);
+medianaArray(array9);
+
+mediaArray(array10);
+modaArray(array10);
+medianaArray(array10);
+
+mediaArray("hola");
+modaArray("hola");
+medianaArray("hola");
+
+</script>
+</body>
+</html>
