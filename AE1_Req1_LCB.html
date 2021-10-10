@@ -18,15 +18,14 @@ let array6 = [3,4,15,15,47,47,47,64,64,64];
 let array7 = [64,4,47,15,47,15,47,3,64,64];
 let array8 = [undefined, undefined, undefined, undefined, undefined, undefined, undefined, 9, 10, 9];
 let array9 = [undefined, 15, "hola", 14, undefined, undefined, undefined, 9, 10, 9];
-
-let arrayAux = [];
-let frecuencia = [];
-let moda = [];
+let array10 = Array(10).fill(undefined);
+let array11 = [undefined, undefined, undefined, 164, undefined, undefined, undefined, undefined, undefined, undefined];
+let array12 = Array(10).fill("a");
 
 
 // Elegir uno de los arrays anteriores para la ejecución
 // (cuidado con alterar array, al ser objetos asigna la direccion de memoria y altera también el original)
-let array = array9;
+let array = array3;
 
 let acumulado = 0;
 let contador = 0;
@@ -37,8 +36,6 @@ for (let i = 0; i<array.length; i++) {
     if (array[i] >= 0 && array[i] <= 100){
         contador ++;
         acumulado += array[i];
-    } else {
-        continue;
     }
 }
 
@@ -46,52 +43,62 @@ for (let i = 0; i<array.length; i++) {
 // MODA
 // Crear array asociativo con los valores válidos a cero.
 // Si las claves se repiten no crea una nueva entrada.
+let frecuencia = {};
 
 for (let i = 0; i<array.length; i++) {
     if (array[i] >= 0 && array[i] <= 100){
-        frecuencia["número "+array[i].toString()] = 0;
-    } else {
-        continue;
+        frecuencia[array[i]] = 0;
     }
 }
+
+console.log(frecuencia);
 
 // Contar valores en el array asociativo
 for (let i = 0; i<array.length; i++) {
     if (array[i] >= 0 && array[i] <= 100){
-        frecuencia["número "+array[i].toString()] += 1;
-    } else {
-        continue;
+        frecuencia[array[i]]++;
     }
 }
 
 // Recorrer el array asociativo para ver qué valor se repite más.
 // Utilizamos el array moda por si hubiera más de un valor, guardarlos todos
 let maxFrec = 0;
+let moda = [];
+
 for (let numero in frecuencia) {
-    // Si el siguiente número se repite más veces que los anteriores, borramos el array moda y ponemos este valor
-    if (frecuencia[numero.toString()] > maxFrec){
+    // Si el siguiente número se repite más veces que los anteriores, 
+    // borramos el array moda y ponemos este valor
+    if (frecuencia[numero] > maxFrec){
         maxFrec = frecuencia[numero];
         moda = [];
-        moda[numero.toString()] = frecuencia[numero.toString()];
-    // Si no es mayor, ignoramos
-    } else if (frecuencia[numero.toString()] < maxFrec) {
-        continue;
-    // Si tuviera tantas apariciones como el mayor hasta ahora, metemos una nueva entrada en el array moda
-    } else if (frecuencia[numero.toString()] === maxFrec) {        
+        moda[0] = numero;
+    // Si tuviera tantas apariciones como el mayor hasta ahora, 
+    // metemos una nueva entrada en el array moda
+    } else if (frecuencia[numero] === maxFrec) {        
         console.log(maxFrec);
-        moda[numero.toString()] = frecuencia[numero.toString()];
-    }
+        moda.push(numero);
+    } // Si no es mayor, ignoramos
 }
 
 // MEDIANA
 
-// Copiar a un array auxiliar omitiendo valores inválidos
+/*
 let omitidos = 0;
 for (let i = 0; i<array.length; i++) {
     if (array[i] >= 0 && array[i] <= 100){
         arrayAux[i-omitidos] = array[i];
     } else {
         omitidos++;
+    }
+}*/
+
+// Copiar a un array auxiliar incluyendo solo valores válidos
+let validos = 0;
+let arrayAux = [];
+for (let i = 0; i<array.length; i++) {
+    if (array[i] >= 0 && array[i] <= 100){
+        arrayAux[validos] = array[i];
+        validos++;
     }
 }
 
@@ -109,10 +116,10 @@ for (let i = 0; i<(arrayAux.length-1); i++) {
 // Cálculo de la mediana
 let mediana;
 
-console.log(mediana);
-// Si es impar
+// Si el número de valores es impar
 if (arrayAux.length%2 === 1){
     mediana = arrayAux[(arrayAux.length-1)/2];
+// Si es par
 } else if (arrayAux.length%2 === 0){
     mediana = (arrayAux[arrayAux.length/2] + arrayAux[arrayAux.length/2-1]) / 2;
 }
@@ -130,20 +137,19 @@ if (contador === 0) {
 }
 
 // Mostrar moda
-let cantidadModa = 0;
-let textoModa = "";
-for (let numero in moda) {
-    cantidadModa++;
-    textoModa += numero + ", ";
+if (moda.length === 0){    
+    console.log("No se puede calcular la moda");
+} else if (moda.length === 1){
+    console.log("La moda corresponde al número " + moda[0] + " que aparece " + maxFrec + " veces.");
+} else if (moda.length > 1) {
+    let textoModa = "";
+    for (let numero in moda) {
+        textoModa += "número " + moda[numero] + ", ";
+    }
+    console.log("La moda corresponde a " + moda.length + " números distintos: " + textoModa + "que aparecen con una frecuencia de " + maxFrec + ".");
 }
 
-if (cantidadModa === 0){    
-    console.log("No se puede calcular la moda");
-} else if (cantidadModa === 1){
-    console.log("La moda corresponde al " + textoModa + "que aparece " + maxFrec + " veces.");
-} else if (cantidadModa > 1) {
-    console.log("La moda corresponde a " + cantidadModa + " números distintos: " + textoModa + "que aparecen con una frecuencia de " + maxFrec + ".");
-}
+
 
 // Mostrar mediana
 if (contador === 0) {    
