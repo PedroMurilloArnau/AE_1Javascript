@@ -25,10 +25,12 @@ let array12 = Array(10).fill("a");
 
 // Elegir uno de los arrays anteriores para la ejecución
 // (cuidado con alterar array, al ser objetos asigna la direccion de memoria y altera también el original)
-let array = array3;
+let array = array12;
 
 let acumulado = 0;
 let contador = 0;
+
+console.log(array);
 
 // MEDIA
 for (let i = 0; i<array.length; i++) {
@@ -51,7 +53,7 @@ for (let i = 0; i<array.length; i++) {
     }
 }
 
-console.log(frecuencia);
+//console.log(frecuencia);
 
 // Contar valores en el array asociativo
 for (let i = 0; i<array.length; i++) {
@@ -75,7 +77,7 @@ for (let numero in frecuencia) {
     // Si tuviera tantas apariciones como el mayor hasta ahora, 
     // metemos una nueva entrada en el array moda
     } else if (frecuencia[numero] === maxFrec) {        
-        console.log(maxFrec);
+        //console.log(maxFrec);
         moda.push(numero);
     } // Si no es mayor, ignoramos
 }
