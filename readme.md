@@ -8,7 +8,7 @@ Realiza un programa en JavaScript que recorra un array de 10 números y calcule 
 
 Cada integrante del equipo debe de proporcionar un algoritmo con la solución y se debe elegir la mejor solución de todas las propuestas con unas conclusiones.
 
-*Valoración: 5 puntos sobre 10.
+*Valoración: 5 puntos sobre 10.*
 
 ## Requerimiento 2
 
